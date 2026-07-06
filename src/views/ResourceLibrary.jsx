@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import TopNavPublic from '../components/TopNavPublic';
+import Footer from '../components/Footer';
 import {
   Filter, Search, Download, FileText, FileSpreadsheet, File, Video,
-  ArrowRight, Activity, MoreVertical, Edit2, Trash2, Upload, X, Check,
+  ArrowRight, MoreVertical, Edit2, Trash2, Upload, X, Check,
   ChevronRight,
 } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
@@ -250,7 +252,8 @@ export default function ResourceLibrary({ setView }) {
   const saving = createResource.isPending || updateResource.isPending;
 
   return (
-    <div className="page flex flex-col min-h-screen">
+    <div className="bg-white min-h-screen flex flex-col font-sans">
+      <TopNavPublic setView={setView} />
       {stepper && (
         <UploadStepper
           initial={stepper.mode === 'edit' ? { title: stepper.resource.title, description: stepper.resource.description ?? '', category: stepper.resource.category, type: stepper.resource.type, file: null, file_url: stepper.resource.file_url ?? '' } : emptyForm}
@@ -390,51 +393,7 @@ export default function ResourceLibrary({ setView }) {
         </div>
       </div>
 
-      {/* Footer Banner */}
-      <div className="w-full">
-        <div className="bg-[#1e4c31] w-full py-16 relative overflow-hidden flex justify-center items-center">
-          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
-          <div className="text-center z-10 px-4">
-            <h2 className="text-3xl font-bold text-white mb-4">Empower Your Learning Journey</h2>
-            <p className="text-emerald-100 mb-8 max-w-2xl mx-auto">Join thousands of African professionals mastering digital skills.</p>
-            <div className="flex justify-center space-x-4">
-              <button onClick={() => setView('CourseCatalog')} className="bg-[#00d084] hover:bg-[#00b875] text-black font-bold px-8 py-3 rounded-lg transition-colors">Start Learning Now</button>
-              <button onClick={() => setView('CourseCatalog')} className="bg-transparent border border-white text-white hover:bg-white/10 font-semibold px-8 py-3 rounded-lg transition-colors">View All Courses</button>
-            </div>
-          </div>
-        </div>
-        <footer className="bg-white border-t border-emerald-200 py-12 px-8">
-          <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-1">
-              <div className="flex items-center space-x-2 text-emerald-800 font-bold text-xl mb-4">
-                <div className="w-8 h-8 rounded-full bg-emerald-800 flex items-center justify-center">
-                  <Activity className="w-5 h-5 text-white" />
-                </div>
-                <span>Uburiza Learn</span>
-              </div>
-              <p className="text-sm text-black">Empowering the next generation of African digital leaders through premium, accessible education.</p>
-            </div>
-            <div>
-              <h4 className="font-bold text-black mb-4">Platform</h4>
-              <ul className="space-y-3 text-sm text-black">
-                <li><button onClick={() => setView('CourseCatalog')} className="hover:text-gray-700">Course Catalog</button></li>
-                <li><button onClick={() => setView('Resources')} className="hover:text-gray-700">Resource Library</button></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-black mb-4">Stay Inspired</h4>
-              <p className="text-sm text-black mb-4">Join our newsletter for the latest tech skills and opportunities.</p>
-              <div className="flex">
-                <input type="email" placeholder="Email address" className="border border-emerald-300 rounded-l-lg px-4 py-2 w-full text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500" />
-                <button className="bg-[#1e4c31] text-white px-4 py-2 rounded-r-lg font-medium">Join</button>
-              </div>
-            </div>
-          </div>
-          <div className="w-full mt-12 pt-8 border-t border-emerald-100 text-sm text-black">
-            <p>Built for the future of Africa. © 2024 Uburiza Learn.</p>
-          </div>
-        </footer>
-      </div>
+      <Footer setView={setView} />
     </div>
   );
 }

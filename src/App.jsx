@@ -157,7 +157,7 @@ function AppContent() {
     }
   };
 
-  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Payment', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword'].includes(view);
+  const isFullPageView = ['LandingPage', 'CourseCatalog', 'CourseOverview', 'CourseMaterial', 'Payment', 'Login', 'Signup', 'VerifyEmail', 'ForgotPassword', 'ResetPassword', 'Resources', 'PartnerWithUs', 'TeachWithUs', 'BusinessInquiry'].includes(view);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
