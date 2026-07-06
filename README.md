@@ -13,7 +13,7 @@ A modern, African-led digital learning platform built with React and Vite. Uburi
 - [Environment Variables](#environment-variables)
 - [Available Scripts](#available-scripts)
 - [Features](#features)
-- [Roles & Access](#roles--access)
+- [Roles & Access](#roles--access) //
 - [API Integration](#api-integration)
 - [Deployment](#deployment)
 - [Demo Credentials](#demo-credentials)
