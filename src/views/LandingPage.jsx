@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import TopNavPublic from '../components/TopNavPublic';
 import Footer from '../components/Footer';
@@ -12,7 +12,10 @@ const CATEGORY_ICONS = {
   Finance: Marketing,
 };
 
+const CATEGORIES = ['All', 'Agriculture', 'Technology', 'Business', 'Finance'];
+
 export default function LandingPage({ setView }) {
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const { data: stats } = useQuery({ queryKey: ['publicStats'], queryFn: getPublicStats, staleTime: 5 * 60 * 1000 });
   const { data: coursesData, isLoading: coursesLoading } = useQuery({ queryKey: ['publicCourses'], queryFn: () => getPublicCourses(3), staleTime: 5 * 60 * 1000 });
   const courses = coursesData?.courses ?? [];
@@ -150,7 +153,7 @@ export default function LandingPage({ setView }) {
 
             {/* Category Tabs */}
             <div className="flex space-x-4 mb-12 overflow-x-auto pb-4 hide-scrollbar">
-              {categories.map(category => (
+              {CATEGORIES.map(category => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
