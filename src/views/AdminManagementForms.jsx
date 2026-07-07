@@ -627,9 +627,15 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
               <input className={inputCls} type="number" min="0" value={lessonForm.duration_mins} onChange={(e) => setLessonForm((f) => ({ ...f, duration_mins: e.target.value }))} placeholder="12" />
             </Field>
           </div>
-          <Field label="Content URL">
-            <input className={inputCls} value={lessonForm.content_url} onChange={(e) => setLessonForm((f) => ({ ...f, content_url: e.target.value }))} placeholder="https://..." />
-          </Field>
+          {lessonForm.type === 'TEXT' ? (
+            <Field label="Content">
+              <textarea className={`${inputCls} resize-none`} rows={6} value={lessonForm.content_url} onChange={(e) => setLessonForm((f) => ({ ...f, content_url: e.target.value }))} placeholder="Write the lesson content here..." />
+            </Field>
+          ) : lessonForm.type === 'VIDEO' ? (
+            <Field label="Video URL" required>
+              <input className={inputCls} value={lessonForm.content_url} onChange={(e) => setLessonForm((f) => ({ ...f, content_url: e.target.value }))} placeholder="https://youtube.com/..." />
+            </Field>
+          ) : null}
         </Modal>
       )}
 
