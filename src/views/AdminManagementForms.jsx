@@ -18,7 +18,7 @@ const CATEGORIES = ['Agriculture', 'Technology', 'Business', 'Finance', 'Health'
 
 const emptyCourse = { title: '', description: '', thumbnail_url: '', price: '', category: '', level: 'BEGINNER', published: false, isPaid: false };
 const emptyModule = { title: '', description: '' };
-const emptyLesson = { title: '', description: '', content_url: '', type: 'VIDEO', duration_mins: '' };
+const emptyLesson = { title: '', description: '', content_url: '', text: '', type: 'VIDEO', duration_mins: '' };
 
 // ─── Small reusable modal ─────────────────────────────────────────────────────
 function Modal({ title, onClose, onSave, saving, children }) {
@@ -535,6 +535,7 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
       title: lesson.title,
       description: lesson.description ?? '',
       content_url: lesson.content_url ?? '',
+      text: lesson.text ?? '',
       type: lesson.type,
       duration_mins: lesson.duration_mins ?? '',
     });
@@ -544,6 +545,8 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
   async function saveLesson() {
     if (!lessonForm.title.trim() || !lessonForm.description.trim()) return;
     if (lessonForm.type === 'VIDEO' && !lessonForm.content_url.trim()) return;
+    const contentUrl = lessonForm.type === 'VIDEO' && lessonForm.content_url.trim() ? lessonForm.content_url : undefined;
+    const text = lessonForm.type === 'TEXT' ? lessonForm.text : '  ';
     if (lessonModal.mode === 'add') {
       const mod = modules.find((m) => m.id === lessonModal.moduleId);
       await createLesson.mutateAsync({
@@ -551,7 +554,8 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
         title: lessonForm.title,
         description: lessonForm.description,
         type: lessonForm.type,
-        content_url: lessonForm.content_url || undefined,
+        content_url: contentUrl,
+        text,
         duration_mins: lessonForm.duration_mins ? parseInt(lessonForm.duration_mins) : undefined,
         order_index: (mod?.lessons?.length ?? 0) + 1,
       });
@@ -561,7 +565,8 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
         title: lessonForm.title,
         description: lessonForm.description || undefined,
         type: lessonForm.type,
-        content_url: lessonForm.content_url || undefined,
+        content_url: contentUrl,
+        text,
         duration_mins: lessonForm.duration_mins ? parseInt(lessonForm.duration_mins) : undefined,
       });
     }
@@ -629,7 +634,7 @@ export default function AdminManagementForms({ setView, editCourseId, onEditDone
           </div>
           {lessonForm.type === 'TEXT' ? (
             <Field label="Content">
-              <textarea className={`${inputCls} resize-none`} rows={6} value={lessonForm.content_url} onChange={(e) => setLessonForm((f) => ({ ...f, content_url: e.target.value }))} placeholder="Write the lesson content here..." />
+              <textarea className={`${inputCls} resize-none`} rows={6} value={lessonForm.text} onChange={(e) => setLessonForm((f) => ({ ...f, text: e.target.value }))} placeholder="Write the lesson content here..." />
             </Field>
           ) : lessonForm.type === 'VIDEO' ? (
             <Field label="Video URL" required>
